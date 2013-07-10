@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.joshfire.phonegap.plugins.SharePlugin"
+    version="1.0.0">
+
+    <name>SharePlugin</name>
+
+    <asset src="www/ShareKitPlugin.js" target="ShareKitPlugin.js" />
+
+	<engines>
+      <engine name="cordova" version=">=2.0.0" />
+    </engines>
+
+    <!-- ios -->
+    <platform name="ios">
+		<config-file target="config.xml" parent="plugins">
+			<plugin name="ShareKitPlugin" value="ShareKitPlugin" />
+		</config-file>
+
+        <source-file src="ios/src/ShareKitPlugin.m" />
+        <source-file src="ios/src/SHKSharer+Phonegap.m" />
+        <source-file src="ios/src/MySHKConfigurator.m" />
+
+        <header-file src="ios/src/ShareKitPlugin.h" />
+        <header-file src="ios/src/SHKSharer+Phonegap.h" />
+        <header-file src="ios/src/MySHKConfigurator.h" />
+
+        <framework src="SystemConfiguration.framework" />
+        <framework src="Security.framework" />
+        <framework src="MessageUI.framework" />
+        <framework src="MobileCoreServices.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="AVFoundation.framework" />
+        <!-- <framework src="CFNetwork.framework" /> --> <!-- for Flickr -->
+        <!-- <framework src="CoreLocation.framework" /> --> <!-- for Foursquare -->
+        <framework src="Twitter.framework" weak="true" /> <!-- it is new in iOS 5, so if you deploy to older versions of iOS, mark it optional -->
+        <framework src="AdSupport.framework" weak="true" /> <!-- mark as optional, new in ios6 -->
+        <framework src="Accounts.framework" weak="true" /> <!-- mark as optional, new in ios5 -->
+        <framework src="libsqlite3.dylib" weak="true" /> <!-- mark as optional, for Facebook -->
+        <framework src="Social.framework" weak="true" /> <!-- mark as optional, new in ios6 for all services natively supported in iOS (currently Facebook, Twitter, SinaWeibo) -->
+        <!-- <framework src="StoreKit.framework" weak="true" /> --> <!-- mark as optional, new in iOS6, for Evernote -->
+        <!-- <framework src="QuartzCore.framework" /> --> <!-- for Dropbox -->
+
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Facebook</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>fb[$FB_APP_ID]</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <preference name="FB_APP_ID" />
+
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="plugins">
+            <plugin name="ShareKitPlugin" value="com.joshfire.phonegap.plugins.share.ShareKitPlugin" />
+        </config-file>
+
+        <source-file src="android/src/ShareKitPlugin.java"
+                target-dir="src/com/joshfire/phonegap/plugins/share" />
+    </platform>
+</plugin>
